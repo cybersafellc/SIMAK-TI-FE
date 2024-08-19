@@ -1,19 +1,19 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SIMAK TI - UMRI",
+  "name": "Sistem Informasi Manajemen Kerja Praktek dan Tugas Akhir Teknik Industri Universitas Muhamadiyah Riau",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "LOGO-UMRI-COLOR-ORI.webp",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "LOGO-UMRI-COLOR-ORI.webp",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "LOGO-UMRI-COLOR-ORI.webp",
       "type": "image/png",
       "sizes": "512x512"
     }
