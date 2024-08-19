@@ -130,6 +130,15 @@ export default function Kordinatorss() {
   }, []); // useEffect tetap berjalan sekali saja
   return (
     <>
+      <Helmet>
+        <script
+          src="/assets/controller/console-bsb.js"
+          type="text/javascript"
+        />
+        <script src="/assets/controller/chart-1.js" type="text/javascript" />
+        <script src="/assets/controller/chart-3.js" type="text/javascript" />
+        <script src="/assets/controller/chart-4.js" type="text/javascript" />
+      </Helmet>
       {isLoading ? (
         <div className="vh-100 w-100 d-flex justify-content-center align-items-center gap-1">
           <Spinner animation="grow" size="sm" />

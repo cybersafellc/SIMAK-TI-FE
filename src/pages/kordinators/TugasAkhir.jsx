@@ -5,11 +5,17 @@ import UpNav from "../../components/UpNav";
 import React from "react";
 import { getKP, getKPSearch, getTA, getTASearch } from "../../utils/all-utils";
 import { useLocation } from "react-router-dom"; // 1
+import { Helmet } from "react-helmet";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 } // 2
 
 export default function TugasAkhir() {
+  const handleDetails = async (id) => {
+    window.location.href = `/kordinators/tugas-akhir/details?id=${id}`;
+    return;
+  };
+
   const [kp, setKp] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [page, setPage] = React.useState(1);
@@ -97,6 +103,15 @@ export default function TugasAkhir() {
   }, []); // useEffect tetap berjalan sekali saja
   return (
     <>
+      <Helmet>
+        <script
+          src="/assets/controller/console-bsb.js"
+          type="text/javascript"
+        />
+        <script src="/assets/controller/chart-1.js" type="text/javascript" />
+        <script src="/assets/controller/chart-3.js" type="text/javascript" />
+        <script src="/assets/controller/chart-4.js" type="text/javascript" />
+      </Helmet>
       {isLoading ? (
         <div className="vh-100 w-100 d-flex justify-content-center align-items-center gap-1">
           <Spinner animation="grow" size="sm" />
@@ -235,8 +250,9 @@ export default function TugasAkhir() {
                                     <Button
                                       className="py-0 px-3"
                                       variant="success"
+                                      onClick={() => handleDetails(data?.id)}
                                     >
-                                      View Details
+                                      Tampilkan Details
                                     </Button>
                                   </td>
                                 </tr>

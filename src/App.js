@@ -13,6 +13,8 @@ import Pembimbings from "./pages/kordinators/Pembimbings";
 import Pembimbing from "./pages/Pembimbing";
 import KerjaPraktek from "./pages/kordinators/KerjaPraktek";
 import TugasAkhir from "./pages/kordinators/TugasAkhir";
+import KpDetails from "./pages/kordinators/KpDetails";
+import TaDetails from "./pages/kordinators/TaDetails";
 
 function App() {
   return (
@@ -30,6 +32,14 @@ function App() {
           <Route path="/kordinators/pembimbing" element={<Pembimbings />} />
           <Route path="/kordinators/kerja-praktek" element={<KerjaPraktek />} />
           <Route path="/kordinators/tugas-akhir" element={<TugasAkhir />} />
+          <Route
+            path="/kordinators/kerja-praktek/details"
+            element={<KpDetails />}
+          />
+          <Route
+            path="/kordinators/tugas-akhir/details"
+            element={<TaDetails />}
+          />
         </Routes>
       </Router>
     </>

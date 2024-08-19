@@ -133,6 +133,15 @@ export default function Berkas() {
   }, []); // useEffect tetap berjalan sekali saja
   return (
     <>
+      <Helmet>
+        <script
+          src="/assets/controller/console-bsb.js"
+          type="text/javascript"
+        />
+        <script src="/assets/controller/chart-1.js" type="text/javascript" />
+        <script src="/assets/controller/chart-3.js" type="text/javascript" />
+        <script src="/assets/controller/chart-4.js" type="text/javascript" />
+      </Helmet>
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Tambahkan File</Modal.Title>

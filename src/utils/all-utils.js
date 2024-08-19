@@ -48,6 +48,22 @@ const getPembimbing = async (page, callback) => {
   }
 };
 
+const getPembimbingId = async (id, callback) => {
+  try {
+    const res = await fetch(`${domain}/pembimbing?id=${id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const files = await res.json();
+    if (files.error) throw new Error(files.message);
+    return await callback(false, files.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
 const addPembimbing = async (form, access_token, callback) => {
   try {
     const res = await fetch(`${domain}/pembimbing`, {
@@ -117,9 +133,43 @@ const getKPSearch = async (search, access_token, callback) => {
   }
 };
 
+const getKPID = async (id, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kp?id=${id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
 const getTA = async (page, access_token, callback) => {
   try {
     const response = await fetch(`${domain}/ta?page=${page}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const getTAID = async (id, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/ta?id=${id}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -324,6 +374,101 @@ const getCountPembimbing = async (callback) => {
   }
 };
 
+const kpSetujui = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kp/diterima`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const taSetujui = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/ta/diterima`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const kpDitolak = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kp/ditolak`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const taDitolak = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/ta/ditolak`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const kpSetJadwal = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kp/set-jadwal`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
 export {
   getFiles,
   getFilesSearch,
@@ -344,4 +489,12 @@ export {
   addPembimbing,
   getKPSearch,
   getTASearch,
+  getKPID,
+  kpSetujui,
+  kpDitolak,
+  kpSetJadwal,
+  getTAID,
+  getPembimbingId,
+  taSetujui,
+  taDitolak,
 };
