@@ -150,6 +150,82 @@ const getKPID = async (id, access_token, callback) => {
   }
 };
 
+const pengajuanTa = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/ta`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const pengajuanKp = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kp`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const revisiTa = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/ta/revisi`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const revisiKp = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kp/revisi`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
 const getTA = async (page, access_token, callback) => {
   try {
     const response = await fetch(`${domain}/ta?page=${page}`, {
@@ -258,6 +334,133 @@ const getMahasiswa = async (page, access_token, callback) => {
   }
 };
 
+const getMahasiswaProfile = async (access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/mahasiswa/profile`, {
+      method: "GET", // Assuming you want to add files, so using POST method
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const getPembimbingProfile = async (access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/pembimbing/profile`, {
+      method: "GET", // Assuming you want to add files, so using POST method
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const getKordinatorsProfile = async (access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kordinators/profile`, {
+      method: "GET", // Assuming you want to add files, so using POST method
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const updatePembimbingProfile = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/pembimbing/profile`, {
+      method: "PUT", // Assuming you want to add files, so using POST method
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const updateKordinatorsProfile = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kordinators/profile`, {
+      method: "PUT", // Assuming you want to add files, so using POST method
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const updatePembimbingPassword = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/pembimbing/password`, {
+      method: "PUT", // Assuming you want to add files, so using POST method
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const updateKordinatorsPassword = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kordinators/password`, {
+      method: "PUT", // Assuming you want to add files, so using POST method
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
 const getMahasiswaSearch = async (search, access_token, callback) => {
   try {
     const response = await fetch(`${domain}/mahasiswa?search=${search}`, {
@@ -337,7 +540,6 @@ const getCountFiles = async (callback) => {
     if (data.error) throw new Error(data.message);
     return await callback(false, data.data);
   } catch (error) {
-    alert(`${domain}/files/count}`);
     return await callback(error, false);
   }
 };
@@ -469,7 +671,27 @@ const kpSetJadwal = async (form, access_token, callback) => {
   }
 };
 
+const kpSetJudul = async (form, access_token, callback) => {
+  try {
+    const response = await fetch(`${domain}/kp/set-judul-laporan`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.message);
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
 export {
+  kpSetJudul,
   getFiles,
   getFilesSearch,
   getPembimbing,
@@ -497,4 +719,15 @@ export {
   getPembimbingId,
   taSetujui,
   taDitolak,
+  getMahasiswaProfile,
+  getPembimbingProfile,
+  updatePembimbingProfile,
+  getKordinatorsProfile,
+  updatePembimbingPassword,
+  updateKordinatorsProfile,
+  updateKordinatorsPassword,
+  pengajuanTa,
+  revisiTa,
+  revisiKp,
+  pengajuanKp,
 };

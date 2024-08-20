@@ -23,6 +23,52 @@ const adminLogin = async ({ username, password }, callback) => {
   }
 };
 
+const mahasiswaLogin = async ({ username, password }, callback) => {
+  try {
+    const response = await fetch(`${domain}/mahasiswa/login`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    });
+    const data = await response.json();
+    if (data.error) {
+      throw new Error(data.message);
+    }
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
+const pembimbingLogin = async ({ username, password }, callback) => {
+  try {
+    const response = await fetch(`${domain}/pembimbing/login`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    });
+    const data = await response.json();
+    if (data.error) {
+      throw new Error(data.message);
+    }
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
 const adminVerifyToken = async (access_token, callback) => {
   try {
     const response = await fetch(`${domain}/kordinators/token-verify`, {
@@ -42,4 +88,4 @@ const adminVerifyToken = async (access_token, callback) => {
   }
 };
 
-export { adminLogin, adminVerifyToken };
+export { adminLogin, adminVerifyToken, mahasiswaLogin, pembimbingLogin };

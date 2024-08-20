@@ -27,10 +27,10 @@ function Navbars() {
               <NavDropdown.Item href="/kordinators/login" className="click">
                 Kordinator
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2" className="click">
+              <NavDropdown.Item href="/pembimbing/login" className="click">
                 Dosen Pembimbing
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3" className="click">
+              <NavDropdown.Item href="/mahasiswa/login" className="click">
                 Mahasiswa
               </NavDropdown.Item>
             </NavDropdown>

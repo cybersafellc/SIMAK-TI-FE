@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Download from "./pages/Download";
 import Home from "./pages/Home";
-import Login from "./pages/kordinators/Login";
+import Login from "./pages/mahasiswa/Login";
 import Kordinators from "./pages/kordinators/Kordinators";
 import Berkas from "./pages/kordinators/Berkas";
 import Index from "./pages/kordinators/Index";
@@ -15,6 +15,16 @@ import KerjaPraktek from "./pages/kordinators/KerjaPraktek";
 import TugasAkhir from "./pages/kordinators/TugasAkhir";
 import KpDetails from "./pages/kordinators/KpDetails";
 import TaDetails from "./pages/kordinators/TaDetails";
+import IndexMhs from "./pages/mahasiswa/IndexMhs";
+import LoginPmb from "./pages/pembimbing/LoginPmb";
+import IndexPmb from "./pages/pembimbing/IndexPmb";
+import TugasAkhirPmb from "./pages/pembimbing/TugasAkhirPmb";
+import TaDetailsPmb from "./pages/pembimbing/TaDetailsPmb";
+import KerjaPraktekPmb from "./pages/pembimbing/KerjaPraktekPmb";
+import KpDetailsPmb from "./pages/pembimbing/KpDetailsPmb";
+import ProfileSaye from "./pages/kordinators/ProfileSaye";
+import TugasAkhirMhs from "./pages/mahasiswa/TugasAkhirMhs";
+import KerjaPraktekMhs from "./pages/mahasiswa/KerjaPraktekMhs";
 
 function App() {
   return (
@@ -26,6 +36,7 @@ function App() {
           <Route path="/pembimbing" element={<Pembimbing />} />
           <Route path="/kordinators" element={<Index />} />
           <Route path="/kordinators/login" element={<NewLogin />} />
+          <Route path="/kordinators/profile" element={<ProfileSaye />} />
           <Route path="/kordinators/berkas" element={<Berkas />} />
           <Route path="/kordinators/mahasiswa" element={<Mahasiswa />} />
           <Route path="/kordinators/kordinators" element={<Kordinatorss />} />
@@ -39,6 +50,30 @@ function App() {
           <Route
             path="/kordinators/tugas-akhir/details"
             element={<TaDetails />}
+          />
+          {/* mahasiswa */}
+          <Route path="/mahasiswa/login" element={<Login />} />
+          <Route path="/mahasiswa" element={<IndexMhs />} />
+          <Route path="/mahasiswa/tugas-akhir" element={<TugasAkhirMhs />} />
+          <Route
+            path="/mahasiswa/kerja-praktek"
+            element={<KerjaPraktekMhs />}
+          />
+          {/* pembimbing */}
+          <Route path="/pembimbing/login" element={<LoginPmb />} />
+          <Route path="/pembimbings" element={<IndexPmb />} />
+          <Route path="/pembimbings/tugas-akhir" element={<TugasAkhirPmb />} />
+          <Route
+            path="/pembimbings/tugas-akhir/details"
+            element={<TaDetailsPmb />}
+          />
+          <Route
+            path="/pembimbings/kerja-praktek"
+            element={<KerjaPraktekPmb />}
+          />
+          <Route
+            path="/pembimbings/kerja-praktek/details"
+            element={<KpDetailsPmb />}
           />
         </Routes>
       </Router>

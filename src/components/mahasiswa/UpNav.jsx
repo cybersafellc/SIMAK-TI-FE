@@ -4,14 +4,14 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-function UpNav() {
+function UpNav({ user }) {
   const handleNavigate = (url) => {
     window.location.href = url;
     return;
   };
   const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    window.location.href = "/kordinators/login";
+    localStorage.removeItem("mhs_token");
+    window.location.href = "/mahasiswa/login";
     return;
   };
   return (
@@ -160,7 +160,7 @@ function UpNav() {
                 <ul className="dropdown-menu dropdown-menu-md-end bsb-dropdown-animation bsb-fadeIn">
                   <li>
                     <h6 className="dropdown-header fs-7 text-center">
-                      Welcome, Admin/Kordinator
+                      Welcome, {user?.nama}
                     </h6>
                   </li>
                   <li>
@@ -168,7 +168,7 @@ function UpNav() {
                   </li>
                   <li>
                     <a
-                      href="/kordinators/profile"
+                      href="pages-profile.html"
                       className="dropdown-item"
                       aria-current="true"
                     >
@@ -185,9 +185,11 @@ function UpNav() {
                         <div className="col-9">
                           <div className="ps-3">
                             <div className="text-secondary mt-1 fs-7">
-                              Kordinator Account
+                              Mahasiswa Account
                             </div>
-                            <div className="text-secondary mt-1 fs-7"></div>
+                            <div className="text-secondary mt-1 fs-7">
+                              {user?.email}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -197,7 +199,7 @@ function UpNav() {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a className="dropdown-item" href="/kordinators/profile">
+                    <a className="dropdown-item" href="/mahasiswa">
                       <span>
                         <i className="bi bi-person-fill me-2" />
                         <span className="fs-7">View Profile</span>
@@ -206,7 +208,7 @@ function UpNav() {
                   </li>
 
                   <li>
-                    <a className="dropdown-item" href="/kordinators/profile">
+                    <a className="dropdown-item" href="/mahasiswa">
                       <span>
                         <i className="bi bi-gear-fill me-2" />
                         <span className="fs-7">Settings &amp; Privacy</span>
@@ -214,7 +216,7 @@ function UpNav() {
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="/kordinators/profile">
+                    <a className="dropdown-item" href="#">
                       <span>
                         <i className="bi bi-question-circle-fill me-2" />
                         <span className="fs-7">Help Center</span>
@@ -227,7 +229,6 @@ function UpNav() {
                   <li>
                     <a
                       className="dropdown-item text-center"
-                      href="#"
                       onClick={handleLogout}
                     >
                       <span>

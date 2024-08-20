@@ -1,32 +1,41 @@
 import { Helmet } from "react-helmet";
-import UpNav from "../../components/UpNav";
-import Sidebar from "../../components/Sidebar";
 import FootersAuth from "../../components/FootersAuth";
 import React from "react";
 import { useLocation } from "react-router-dom"; // 1
 import {
   getKPID,
   getPembimbing,
+  getPembimbingId,
+  getPembimbingProfile,
+  getTAID,
   kpDitolak,
   kpSetJadwal,
   kpSetujui,
+  taDitolak,
+  taSetujui,
 } from "../../utils/all-utils";
 import { Badge, Nav, Spinner } from "react-bootstrap";
 import Message from "../../components/Message";
+import UpNav from "../../components/pembimbing/UpNav";
+import Sidebar from "../../components/pembimbing/Sidebar";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 } // 2
 
-export default function KpDetails() {
+export default function TaDetailsPmb() {
   const [id, setId] = React.useState("");
   const [kp, setKp] = React.useState({});
   const [pembimbing, setPembimbing] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(true);
 
   const [dosenPembimbing, setDosenPembimbing] = React.useState("");
+  const [dosenPembimbing2, setDosenPembimbing2] = React.useState("");
   const [keterangan, setKeterangan] = React.useState("");
+  const [jdlPenelitian, setJdlPenelitian] = React.useState("");
   const changePembimbing = ({ target }) => setDosenPembimbing(target.value);
+  const changePembimbing2 = ({ target }) => setDosenPembimbing2(target.value);
   const changeKeterangan = ({ target }) => setKeterangan(target.value);
+  const changeJdlPenelitian = ({ target }) => setJdlPenelitian(target.value);
 
   const query = useQuery(); // 3
 
@@ -35,6 +44,13 @@ export default function KpDetails() {
   const [view, setView] = React.useState(false);
   const [message, setMessage] = React.useState("");
 
+  const [pb1, setPb1] = React.useState("");
+  const [pb2, setPb2] = React.useState("");
+  const [pb3, setPb3] = React.useState("");
+  const [pb4, setPb4] = React.useState("");
+
+  const [profile, setProfile] = React.useState({});
+
   const [tanggalMulai, setTanggalMulai] = React.useState("");
   const changeTanggalMulai = ({ target }) => setTanggalMulai(target.value);
   const [tanggalAkhir, setTanggalAkhir] = React.useState("");
@@ -42,10 +58,10 @@ export default function KpDetails() {
   const setJadwal = async (e) => {
     e.preventDefault();
     try {
-      const accessToken = localStorage.getItem("access_token");
+      const accessToken = localStorage.getItem("pmb_token");
       if (!accessToken) {
         // Jika tidak ada access token, langsung alihkan ke halaman login
-        window.location.href = "/kordinators/login";
+        window.location.href = "/pembimbing/login";
         return;
       }
       setLoading(true);
@@ -64,16 +80,16 @@ export default function KpDetails() {
       ]);
       if (data) {
         setError(false);
-        setMessage("Berhasil Set Jadwal");
+        setMessage("Berhasil Menolak");
         setView(true);
         setTimeout(() => {
           window.location.reload();
         }, 5000);
       }
     } catch (err) {
-      if (err.message === "tolong masukkan access_token valid") {
-        localStorage.removeItem("access_token");
-        window.location.href = "/kordinators/login";
+      if (err.message === "tolong masukkan pmb_token valid") {
+        localStorage.removeItem("pmb_token");
+        window.location.href = "/pembimbing/login";
         return;
       }
       // Tangani error dengan lebih hati-hati, misalnya:
@@ -90,10 +106,10 @@ export default function KpDetails() {
   const tolak = async (e) => {
     e.preventDefault();
     try {
-      const accessToken = localStorage.getItem("access_token");
+      const accessToken = localStorage.getItem("pmb_token");
       if (!accessToken) {
         // Jika tidak ada access token, langsung alihkan ke halaman login
-        window.location.href = "/kordinators/login";
+        window.location.href = "/pembimbing/login";
         return;
       }
       setLoading(true);
@@ -103,7 +119,7 @@ export default function KpDetails() {
       };
       const [data] = await Promise.all([
         new Promise((resolve, reject) => {
-          kpDitolak(form, accessToken, (err, data) => {
+          taDitolak(form, accessToken, (err, data) => {
             if (err) reject(err);
             else resolve(data);
           });
@@ -118,9 +134,9 @@ export default function KpDetails() {
         }, 5000);
       }
     } catch (err) {
-      if (err.message === "tolong masukkan access_token valid") {
-        localStorage.removeItem("access_token");
-        window.location.href = "/kordinators/login";
+      if (err.message === "tolong masukkan pmb_token valid") {
+        localStorage.removeItem("pmb_token");
+        window.location.href = "/pembimbing/login";
         return;
       }
       // Tangani error dengan lebih hati-hati, misalnya:
@@ -137,21 +153,22 @@ export default function KpDetails() {
   const setujui = async (e) => {
     e.preventDefault();
     try {
-      const accessToken = localStorage.getItem("access_token");
+      const accessToken = localStorage.getItem("pmb_token");
       if (!accessToken) {
         // Jika tidak ada access token, langsung alihkan ke halaman login
-        window.location.href = "/kordinators/login";
+        window.location.href = "/pembimbing/login";
         return;
       }
       setLoading(true);
       const form = {
-        pembimbing_id: dosenPembimbing,
+        pembimbing_satu_id: dosenPembimbing,
+        pembimbing_dua_id: dosenPembimbing2,
         id: query.get("id"),
-        keterangan: keterangan,
+        judul_penelitian: jdlPenelitian,
       };
       const [data] = await Promise.all([
         new Promise((resolve, reject) => {
-          kpSetujui(form, accessToken, (err, data) => {
+          taSetujui(form, accessToken, (err, data) => {
             if (err) reject(err);
             else resolve(data);
           });
@@ -166,9 +183,9 @@ export default function KpDetails() {
         }, 5000);
       }
     } catch (err) {
-      if (err.message === "tolong masukkan access_token valid") {
-        localStorage.removeItem("access_token");
-        window.location.href = "/kordinators/login";
+      if (err.message === "tolong masukkan pmb_token valid") {
+        localStorage.removeItem("pmb_token");
+        window.location.href = "/pembimbing/login";
         return;
       }
       // Tangani error dengan lebih hati-hati, misalnya:
@@ -189,54 +206,89 @@ export default function KpDetails() {
     }
     const fetchData = async () => {
       try {
-        const accessToken = localStorage.getItem("access_token");
+        const accessToken = localStorage.getItem("pmb_token");
         if (!accessToken) {
           // Jika tidak ada access token, langsung alihkan ke halaman login
-          window.location.href = "/kordinators/login";
+          window.location.href = "/pembimbing/login";
           return;
         }
 
-        const [kpData, pembimbing1, pembimbing2, pembimbing3] =
-          await Promise.all([
+        const [kpData, profile] = await Promise.all([
+          new Promise((resolve, reject) => {
+            getTAID(query.get("id"), accessToken, (err, data) => {
+              if (err) reject(err);
+              else resolve(data);
+            });
+          }),
+          new Promise((resolve, reject) => {
+            getPembimbingProfile(accessToken, (err, data) => {
+              if (err) reject(err);
+              else resolve(data);
+            });
+          }),
+        ]);
+        setKp(kpData);
+        setProfile(profile);
+        console.log(kpData);
+        if (kpData) {
+          const [dtlpb1, dtlpb2, dtlpb3, dtlpb4] = await Promise.all([
             new Promise((resolve, reject) => {
-              getKPID(query.get("id"), accessToken, (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-              });
+              getPembimbingId(
+                kpData?.details_pengajuan_ta?.pembimbing_satu,
+                (err, data) => {
+                  if (err) reject(err);
+                  else resolve(data);
+                }
+              );
             }),
             new Promise((resolve, reject) => {
-              getPembimbing(1, (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-              });
+              getPembimbingId(
+                kpData?.details_pengajuan_ta?.pembimbing_dua,
+                (err, data) => {
+                  if (err) reject(err);
+                  else resolve(data);
+                }
+              );
             }),
             new Promise((resolve, reject) => {
-              getPembimbing(2, (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-              });
+              getPembimbingId(
+                kpData?.details_pengajuan_ta?.pembimbing_tiga,
+                (err, data) => {
+                  if (err) reject(err);
+                  else resolve(data);
+                }
+              );
             }),
             new Promise((resolve, reject) => {
-              getPembimbing(3, (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-              });
+              getPembimbingId(
+                kpData?.details_pengajuan_ta?.pembimbing_empat,
+                (err, data) => {
+                  if (err) reject(err);
+                  else resolve(data);
+                }
+              );
             }),
           ]);
-        setKp(kpData);
-        setPembimbing([...pembimbing1, ...pembimbing2, ...pembimbing3]);
+          setPb1(dtlpb1);
+          setPb2(dtlpb2);
+          setPb3(dtlpb3);
+          setPb4(dtlpb4);
+        }
         console.log(kpData);
       } catch (err) {
         // Tangani error dengan lebih hati-hati, misalnya:
-        if (err.message == `pengajuan dengan id ${query.get("id")} tidak ada`) {
+        if (
+          err.message ==
+          `tidak ada mahasaiswa bimbingan dengan id:${query.get("id")}`
+        ) {
           alert(err);
-          window.location.href = "/kordinators/kerja-praktek";
+          window.location.href = "/pembimbings/tugas-akhir";
         } else if (err.message == "Failed to fetch") {
           console.error("Error fetching data:", err);
           // Unauthorized
         } else {
-          localStorage.removeItem("access_token");
-          window.location.href = "/kordinators/login";
+          localStorage.removeItem("pmb_token");
+          window.location.href = "/pembimbing/login";
           //   Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
@@ -266,7 +318,7 @@ export default function KpDetails() {
       ) : (
         <>
           {" "}
-          <UpNav />
+          <UpNav user={profile} />
           <Sidebar />
           <main id="main">
             <Message
@@ -281,18 +333,18 @@ export default function KpDetails() {
               <div className="container">
                 <div className="row">
                   <div className="col-12">
-                    <h1 className="h4">Details Pengajuan KP</h1>
+                    <h1 className="h4">Details Pengajuan TA</h1>
                     <nav aria-label="breadcrumb">
                       <ol className="breadcrumb m-0 fs-7">
                         <li className="breadcrumb-item">
                           <a
                             className="link-primary text-decoration-none"
-                            href="/kordinators"
+                            href="/pembimbings"
                           >
                             Home
                           </a>
                         </li>
-                        <li className="breadcrumb-item">Kerja Praktek</li>
+                        <li className="breadcrumb-item">Tugas Akhir</li>
                         <li
                           className="breadcrumb-item active"
                           aria-current="page"
@@ -355,21 +407,36 @@ export default function KpDetails() {
                       <div className="col-12">
                         <div className="card widget-card border-light shadow-sm">
                           <div className="card-header text-bg-success">
-                            Informasi Kerja Praktek
+                            Informasi Tugas Akhir
                           </div>
                           <div className="card-body">
                             <ul className="list-group list-group-flush mb-0">
                               <li className="list-group-item">
-                                <h6 className="mb-1">Judul Laporan</h6>
-                                <span>
-                                  {kp?.details_disetujui?.judul_laporan || "-"}
-                                </span>
+                                <h6 className="mb-1">Judul Penilitian</h6>
+                                <span>{kp?.judul_penelitian || "-"}</span>
                               </li>
                               <li className="list-group-item">
-                                <h6 className="mb-1">Dosen Pembimbing</h6>
+                                <h6 className="mb-1">Dosen Pembimbing 1</h6>
+                                <span>{kp?.pembimbing_satu?.nama || "-"}</span>
+                              </li>
+                              <li className="list-group-item">
+                                <h6 className="mb-1">Dosen Pembimbing 2</h6>
+                                <span>{kp?.pembimbing_dua?.nama || "-"}</span>
+                              </li>
+                              <li className="list-group-item">
+                                <h6 className="mb-1">Tanggal Disetujui</h6>
                                 <span>
-                                  {kp?.details_disetujui?.pembimbing_satu
-                                    ?.nama || "-"}
+                                  {`${new Date(
+                                    kp?.created_at
+                                  ).getDate()}-${new Date(
+                                    kp?.created_at
+                                  ).getMonth()}-${new Date(
+                                    kp?.created_at
+                                  ).getFullYear()} ${new Date(
+                                    kp?.created_at
+                                  ).getHours()}:${new Date(
+                                    kp?.created_at
+                                  ).getMinutes()}`}
                                 </span>
                               </li>
                             </ul>
@@ -400,48 +467,6 @@ export default function KpDetails() {
                               Detail
                             </button>
                           </li>
-                          <li className="nav-item" role="presentation">
-                            <button
-                              className="nav-link"
-                              id="profile-tab"
-                              data-bs-toggle="tab"
-                              data-bs-target="#profile-tab-pane"
-                              type="button"
-                              role="tab"
-                              aria-controls="profile-tab-pane"
-                              aria-selected="false"
-                            >
-                              Setujui
-                            </button>
-                          </li>
-                          <li className="nav-item" role="presentation">
-                            <button
-                              className="nav-link"
-                              id="email-tab"
-                              data-bs-toggle="tab"
-                              data-bs-target="#email-tab-pane"
-                              type="button"
-                              role="tab"
-                              aria-controls="email-tab-pane"
-                              aria-selected="false"
-                            >
-                              Tolak
-                            </button>
-                          </li>
-                          <li className="nav-item" role="presentation">
-                            <button
-                              className="nav-link"
-                              id="password-tab"
-                              data-bs-toggle="tab"
-                              data-bs-target="#password-tab-pane"
-                              type="button"
-                              role="tab"
-                              aria-controls="password-tab-pane"
-                              aria-selected="false"
-                            >
-                              Set Jadwal
-                            </button>
-                          </li>
                         </ul>
                         <div
                           className="tab-content pt-4"
@@ -457,12 +482,12 @@ export default function KpDetails() {
                             <h5 className="mb-3">Data Pengajuan</h5>
                             <div className="row g-0">
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                <div className="p-2">Form Rekomendasi 1</div>
+                                <div className="p-2">Form Tugas Akhir</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
                                   <Nav.Link
-                                    href={kp?.form_rekomendasi_pa_1}
+                                    href={kp?.details_pengajuan_ta?.form_ta}
                                     target="_blank"
                                     className="text-primary text-decoration-underline"
                                   >
@@ -471,43 +496,77 @@ export default function KpDetails() {
                                 </div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                <div className="p-2">Form Rekomendasi 2</div>
+                                <div className="p-2">Judul 1</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
-                                  {" "}
-                                  <Nav.Link
-                                    href={kp?.form_rekomendasi_pa_2}
-                                    target="_blank"
-                                    className="text-primary text-decoration-underline"
-                                  >
-                                    Lihat Disini
-                                  </Nav.Link>
+                                  {kp?.details_pengajuan_ta?.judul_pertama}
                                 </div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                <div className="p-2">
-                                  Form Persetujuan Perusahaan
-                                </div>
+                                <div className="p-2">Deskripsi Judul 1</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
-                                  <Nav.Link
-                                    href={kp?.form_persetujuan_perusahaan}
-                                    target="_blank"
-                                    className="text-primary text-decoration-underline"
-                                  >
-                                    Lihat Disini
-                                  </Nav.Link>
+                                  {
+                                    kp?.details_pengajuan_ta
+                                      ?.deskripsi_judul_pertama
+                                  }
                                 </div>
                               </div>
+                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                <div className="p-2">Judul 2</div>
+                              </div>
+                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                <div className="p-2">
+                                  {kp?.details_pengajuan_ta?.judul_kedua}
+                                </div>
+                              </div>
+                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                <div className="p-2">Deskripsi Judul 2</div>
+                              </div>
+                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                <div className="p-2">
+                                  {
+                                    kp?.details_pengajuan_ta
+                                      ?.deskripsi_judul_kedua
+                                  }
+                                </div>
+                              </div>
+                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                <div className="p-2">Pembimbing 1</div>
+                              </div>
+                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                <div className="p-2">{pb1?.nama}</div>
+                              </div>
+                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                <div className="p-2">Pembimbing 2</div>
+                              </div>
+                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                <div className="p-2">{pb2?.nama}</div>
+                              </div>
+                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                <div className="p-2">Pembimbing 3</div>
+                              </div>
+                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                <div className="p-2">{pb3?.nama}</div>
+                              </div>
+                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                <div className="p-2">Pembimbing 4</div>
+                              </div>
+                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                <div className="p-2">{pb4?.nama}</div>
+                              </div>
+
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                 <div className="p-2">Bukti Pembayaran</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
                                   <Nav.Link
-                                    href={kp?.bukti_pembayaran}
+                                    href={
+                                      kp?.details_pengajuan_ta?.bukti_pembayaran
+                                    }
                                     target="_blank"
                                     className="text-primary text-decoration-underline"
                                   >
@@ -524,7 +583,27 @@ export default function KpDetails() {
                                 <div className="p-2">
                                   {" "}
                                   <Nav.Link
-                                    href={kp?.bukti_selesai_praktikum}
+                                    href={
+                                      kp?.details_pengajuan_ta
+                                        ?.bukti_selesai_praktikum
+                                    }
+                                    target="_blank"
+                                    className="text-primary text-decoration-underline"
+                                  >
+                                    Lihat Disini
+                                  </Nav.Link>
+                                </div>
+                              </div>
+                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                <div className="p-2">Bukti Selesai KP</div>
+                              </div>
+                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                <div className="p-2">
+                                  {" "}
+                                  <Nav.Link
+                                    href={
+                                      kp?.details_pengajuan_ta?.bukti_selsai_kp
+                                    }
                                     target="_blank"
                                     className="text-primary text-decoration-underline"
                                   >
@@ -539,7 +618,7 @@ export default function KpDetails() {
                                 <div className="p-2">
                                   {" "}
                                   <Nav.Link
-                                    href={kp?.ipk}
+                                    href={kp?.details_pengajuan_ta?.ipk}
                                     target="_blank"
                                     className="text-primary text-decoration-underline"
                                   >
@@ -554,7 +633,7 @@ export default function KpDetails() {
                                 <div className="p-2">
                                   {" "}
                                   <Nav.Link
-                                    href={kp?.jumlah_sks}
+                                    href={kp?.details_pengajuan_ta?.jumlah_sks}
                                     target="_blank"
                                     className="text-primary text-decoration-underline"
                                   >
@@ -569,7 +648,7 @@ export default function KpDetails() {
                                 <div className="p-2">
                                   {" "}
                                   <Nav.Link
-                                    href={kp?.krs}
+                                    href={kp?.details_pengajuan_ta?.krs}
                                     target="_blank"
                                     className="text-primary text-decoration-underline"
                                   >
@@ -583,7 +662,9 @@ export default function KpDetails() {
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
                                   <Nav.Link
-                                    href={kp?.transkip_nilai}
+                                    href={
+                                      kp?.details_pengajuan_ta?.transkip_nilai
+                                    }
                                     target="_blank"
                                     className="text-primary text-decoration-underline"
                                   >
@@ -597,63 +678,25 @@ export default function KpDetails() {
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
                                   {`${new Date(
-                                    kp?.created_at
+                                    kp?.details_pengajuan_ta?.created_at
                                   ).getDate()}-${new Date(
-                                    kp?.created_at
+                                    kp?.details_pengajuan_ta?.created_at
                                   ).getMonth()}-${new Date(
-                                    kp?.created_at
+                                    kp?.details_pengajuan_ta?.created_at
                                   ).getFullYear()} ${new Date(
-                                    kp?.created_at
+                                    kp?.details_pengajuan_ta?.created_at
                                   ).getHours()}:${new Date(
-                                    kp?.created_at
+                                    kp?.details_pengajuan_ta?.created_at
                                   ).getMinutes()}`}
                                 </div>
                               </div>
-                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                <div className="p-2">Tanggal Mulai KP</div>
-                              </div>
-                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                <div className="p-2">
-                                  {kp?.tanggal_mulai_kp ? (
-                                    `${new Date(
-                                      kp.tanggal_mulai_kp
-                                    ).getDate()}-${
-                                      new Date(kp.tanggal_mulai_kp).getMonth() +
-                                      1
-                                    }-${new Date(
-                                      kp.tanggal_mulai_kp
-                                    ).getFullYear()} `
-                                  ) : (
-                                    <span className="fst-italic">-</span>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                <div className="p-2">Tanggal Expired KP</div>
-                              </div>
-                              <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                <div className="p-2">
-                                  {kp?.tanggal_selesai_kp ? (
-                                    `${new Date(
-                                      kp.tanggal_selesai_kp
-                                    ).getDate()}-${
-                                      new Date(
-                                        kp.tanggal_selesai_kp
-                                      ).getMonth() + 1
-                                    }-${new Date(
-                                      kp.tanggal_selesai_kp
-                                    ).getFullYear()} `
-                                  ) : (
-                                    <span className="fst-italic">-</span>
-                                  )}
-                                </div>
-                              </div>
+
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                 <div className="p-2">Keterangan</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
-                                  {kp?.keterangan || "-"}
+                                  {kp?.details_pengajuan_ta?.keterangan || "-"}
                                 </div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
@@ -661,17 +704,20 @@ export default function KpDetails() {
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
-                                  {kp?.status === "ditolak" && (
+                                  {kp?.details_pengajuan_ta?.status ===
+                                    "ditolak" && (
                                     <span className="badge rounded-pill bg-danger">
                                       Ditolak
                                     </span>
                                   )}
-                                  {kp?.status === "diterima" && (
+                                  {kp?.details_pengajuan_ta?.status ===
+                                    "diterima" && (
                                     <span className="badge rounded-pill bg-success">
                                       Disetujui
                                     </span>
                                   )}
-                                  {kp?.status === "menunggu" && (
+                                  {kp?.details_pengajuan_ta?.status ===
+                                    "menunggu" && (
                                     <span className="badge rounded-pill bg-warning">
                                       Menunggu
                                     </span>
@@ -679,165 +725,6 @@ export default function KpDetails() {
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div
-                            className="tab-pane fade"
-                            id="profile-tab-pane"
-                            role="tabpanel"
-                            aria-labelledby="profile-tab"
-                            tabIndex={0}
-                          >
-                            {kp?.status === "menunggu" ? (
-                              <form
-                                className="row gy-3 gy-xxl-4"
-                                onSubmit={setujui}
-                              >
-                                <div className="col-12 ">
-                                  <label
-                                    htmlFor="inputCountry"
-                                    className="form-label"
-                                  >
-                                    Dosen Pembimbing
-                                  </label>
-                                  <select
-                                    className="form-select"
-                                    id="inputCountry"
-                                    onChange={changePembimbing}
-                                    value={dosenPembimbing}
-                                  >
-                                    {pembimbing.map((pembimbing, index) => {
-                                      return (
-                                        <option value={pembimbing?.id}>
-                                          {pembimbing?.nama}
-                                        </option>
-                                      );
-                                    })}
-                                  </select>
-                                </div>
-
-                                <div className="col-12">
-                                  <label
-                                    htmlFor="inputAbout"
-                                    className="form-label"
-                                  >
-                                    Keterangan
-                                  </label>
-                                  <textarea
-                                    className="form-control"
-                                    id="inputAbout"
-                                    value={keterangan}
-                                    onChange={changeKeterangan}
-                                  />
-                                </div>
-                                <div className="col-12">
-                                  <button
-                                    type="submit"
-                                    className="btn btn-success"
-                                    disabled={loading}
-                                  >
-                                    Setujui
-                                  </button>
-                                </div>
-                              </form>
-                            ) : (
-                              <div>Tidak Dapat Menyetujui</div>
-                            )}
-                          </div>
-                          <div
-                            className="tab-pane fade"
-                            id="email-tab-pane"
-                            role="tabpanel"
-                            aria-labelledby="email-tab"
-                            tabIndex={0}
-                          >
-                            {kp?.status === "menunggu" ? (
-                              <form
-                                className="row gy-3 gy-xxl-4"
-                                onSubmit={tolak}
-                              >
-                                <div className="col-12">
-                                  <label
-                                    htmlFor="inputAbout"
-                                    className="form-label"
-                                  >
-                                    Keterangan
-                                  </label>
-                                  <textarea
-                                    className="form-control"
-                                    id="inputAbout"
-                                    value={keterangan}
-                                    onChange={changeKeterangan}
-                                  />
-                                </div>
-                                <div className="col-12">
-                                  <button
-                                    type="submit"
-                                    className="btn btn-danger"
-                                    disabled={loading}
-                                  >
-                                    Tolak
-                                  </button>
-                                </div>
-                              </form>
-                            ) : (
-                              <div>Tidak Dapat Menyetujui</div>
-                            )}
-                          </div>
-                          <div
-                            className="tab-pane fade"
-                            id="password-tab-pane"
-                            role="tabpanel"
-                            aria-labelledby="password-tab"
-                            tabIndex={0}
-                          >
-                            {kp?.status === "diterima" &&
-                            kp?.tanggal_mulai_kp == null &&
-                            kp?.tanggal_selesai_kp == null ? (
-                              <form onSubmit={setJadwal}>
-                                <div className="row gy-3 gy-xxl-4">
-                                  <div className="col-12">
-                                    <label
-                                      htmlFor="newPassword"
-                                      className="form-label"
-                                    >
-                                      Tanggal Mulai KP
-                                    </label>
-                                    <input
-                                      type="date"
-                                      className="form-control"
-                                      id="newPassword"
-                                      value={tanggalMulai}
-                                      onChange={changeTanggalMulai}
-                                    />
-                                  </div>
-                                  <div className="col-12">
-                                    <label
-                                      htmlFor="confirmPassword"
-                                      className="form-label"
-                                    >
-                                      Tanggal Expired KP
-                                    </label>
-                                    <input
-                                      type="date"
-                                      className="form-control"
-                                      id="confirmPassword"
-                                      value={tanggalAkhir}
-                                      onChange={changeTanggalAkhir}
-                                    />
-                                  </div>
-                                  <div className="col-12">
-                                    <button
-                                      type="submit"
-                                      className="btn btn-success"
-                                    >
-                                      Simpan Jadwal
-                                    </button>
-                                  </div>
-                                </div>
-                              </form>
-                            ) : (
-                              <div>Belum Bisa Set Jadwal</div>
-                            )}
                           </div>
                         </div>
                       </div>
