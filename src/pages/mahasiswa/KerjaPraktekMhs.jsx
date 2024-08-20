@@ -590,7 +590,7 @@ export default function KerjaPraktekMhs() {
                                     <div className="p-2">
                                       {detailTa?.tanggal_mulai_kp ? (
                                         `${new Date(
-                                          detailTa?.tanggal_mulait
+                                          detailTa?.tanggal_mulai_kp
                                         ).getDate()}-${
                                           new Date(
                                             detailTa?.tanggal_mulai_kp
