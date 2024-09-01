@@ -156,7 +156,7 @@ export default function Sidebar({ active, path }) {
                       <a
                         className={"nav-link text-secondary"}
                         aria-current="page"
-                        href="/mahasiswa"
+                        href="/mahasiswa/seminar-kp"
                       >
                         <div className="nav-link-icon text-success-emphasis">
                           <i className="bi bi-arrow-right-short" />
@@ -168,7 +168,7 @@ export default function Sidebar({ active, path }) {
                       <a
                         className={"nav-link text-secondary"}
                         aria-current="page"
-                        href="/mahasiswa"
+                        href="/mahasiswa/seminar-proposal"
                       >
                         <div className="nav-link-icon text-success-emphasis">
                           <i className="bi bi-arrow-right-short" />
@@ -180,7 +180,7 @@ export default function Sidebar({ active, path }) {
                       <a
                         className={"nav-link text-secondary"}
                         aria-current="page"
-                        href="/mahasiswa"
+                        href="/mahasiswa/seminar-hasil"
                       >
                         <div className="nav-link-icon text-success-emphasis">
                           <i className="bi bi-arrow-right-short" />

@@ -5,6 +5,9 @@ import Footers from "../components/Footers";
 import Cards from "../components/Home/Cards";
 
 export default function Home() {
+  const handleLogin = () => {
+    window.location.href = "/mahasiswa/login";
+  };
   return (
     <>
       <Navbars />
@@ -26,10 +29,16 @@ export default function Home() {
                 </p>
 
                 <div className="d-flex gap-2 pt-3">
-                  <Button className="fs-6 p-3 bg-success border-success">
+                  <Button
+                    className="fs-6 p-3 bg-success border-success"
+                    onClick={handleLogin}
+                  >
                     Pengajuan KP
                   </Button>
-                  <Button className="fs-6 p-3 bg-transparent text-success border-success">
+                  <Button
+                    className="fs-6 p-3 bg-transparent text-success border-success"
+                    onClick={handleLogin}
+                  >
                     Pengajuan TA
                   </Button>
                 </div>

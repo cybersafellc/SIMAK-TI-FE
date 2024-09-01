@@ -86,14 +86,12 @@ export default function TugasAkhir() {
         setKp(kpData);
         console.log(kpData);
       } catch (err) {
-        // Tangani error dengan lebih hati-hati, misalnya:
-        if (err.message !== "Failed to fetch") {
+        if (err.message == "tolong masukkan access_token valid") {
           // Unauthorized
           localStorage.removeItem("access_token");
           window.location.href = "/kordinators/login";
         } else {
           console.error("Error fetching data:", err);
-          // Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
         setIsLoading(false); // Selesai loading

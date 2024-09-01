@@ -167,11 +167,7 @@ function UpNav({ user }) {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a
-                      href="pages-profile.html"
-                      className="dropdown-item"
-                      aria-current="true"
-                    >
+                    <a href="#" className="dropdown-item" aria-current="true">
                       <div className="row g-0 align-items-center">
                         <div className="col-3">
                           <img

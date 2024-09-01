@@ -87,24 +87,21 @@ export default function IndexMhs() {
         }
         console.log(mahasiswaProfile);
       } catch (err) {
-        // Tangani error dengan lebih hati-hati, misalnya:
-        if (err.message !== "Failed to fetch") {
+        if (err.message == "tolong masukkan access_token valid") {
           // Unauthorized
           localStorage.removeItem("mhs_token");
           window.location.href = "/mahasiswa/login";
         } else {
           console.error("Error fetching data:", err);
-          // Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
-        setIsLoading(false); // Selesai loading
+        setIsLoading(false);
       }
     };
     fetchData();
-  }, []); // useEffect tetap berjalan sekali saja
+  }, []);
   return (
     <>
-      {" "}
       {isLoading ? (
         <div className="vh-100 w-100 d-flex justify-content-center align-items-center gap-1">
           <Spinner animation="grow" size="sm" />
@@ -135,7 +132,7 @@ export default function IndexMhs() {
             <UpNav user={mahasiswa} />
             <Sidebar />
             {/* Main */}
-            <main id="main">
+            <main id="main" className="min-vh-100 bg-light">
               {/* Section - Bootstrap Brain Component */}
               {/* Breadcrumb */}
               <section className="py-3 py-md-4 py-xl-5 bg-light">
@@ -174,7 +171,7 @@ export default function IndexMhs() {
                             <div className="card-body">
                               <div className="text-center mb-3">
                                 <img
-                                  src="./assets/img/profile/profile-img-1.jpg"
+                                  src="/assets/img/profile/profile-img-1.jpg"
                                   className="img-fluid rounded-circle"
                                   alt="Luna John"
                                 />

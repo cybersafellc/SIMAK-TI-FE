@@ -156,9 +156,9 @@ export default function Login() {
                         </div>
                         <div className="col-12">
                           <p className="m-0 text-secondary text-center">
-                            Tidak Memiliki Akun Kordinator?{" "}
+                            Tidak Memiliki Akun Mahasiswa?{" "}
                             <a
-                              href="auth-register.html"
+                              href="/mahasiswa/register"
                               className="link-primary text-decoration-none"
                             >
                               Sign up

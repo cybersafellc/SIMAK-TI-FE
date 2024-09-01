@@ -15,9 +15,6 @@ export default function Footers() {
             <Col className="d-flex align-items-center justify-content-end">
               <div className="d-flex gap-3 align-items-center justify-content-end fs-2 ">
                 <Nav.Link href="#">
-                  <i class="bx bxl-instagram-alt"></i>
-                </Nav.Link>
-                <Nav.Link href="#">
                   <i class="bx bxl-youtube"></i>
                 </Nav.Link>
                 <Nav.Link href="#">

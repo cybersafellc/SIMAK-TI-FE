@@ -56,14 +56,11 @@ export default function TugasAkhirPmb() {
       ]);
       setKp(mahasiswa);
     } catch (err) {
-      // Tangani error dengan lebih hati-hati, misalnya:
-      if (err.message !== "Failed to fetch") {
-        // Unauthorized
+      if (err.message == "tolong masukkan access_token valid") {
         localStorage.removeItem("pmb_token");
         window.location.href = "/pembimbing/login";
       } else {
         console.error("Error fetching data:", err);
-        // Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
       }
     } finally {
       setIsLoading(false); // Selesai loading
@@ -100,14 +97,11 @@ export default function TugasAkhirPmb() {
         setKp(kpData);
         console.log(kpData);
       } catch (err) {
-        // Tangani error dengan lebih hati-hati, misalnya:
-        if (err.message !== "Failed to fetch") {
-          // Unauthorized
+        if (err.message == "tolong masukkan access_token valid") {
           localStorage.removeItem("pmb_token");
           window.location.href = "/pembimbing/login";
         } else {
           console.error("Error fetching data:", err);
-          // Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
         setIsLoading(false); // Selesai loading

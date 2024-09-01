@@ -154,7 +154,7 @@ export default function NewLogin() {
                             </button>
                           </div>
                         </div>
-                        <div className="col-12">
+                        {/* <div className="col-12">
                           <p className="m-0 text-secondary text-center">
                             Tidak Memiliki Akun Kordinator?{" "}
                             <a
@@ -164,7 +164,7 @@ export default function NewLogin() {
                               Sign up
                             </a>
                           </p>
-                        </div>
+                        </div> */}
                       </div>
                     </form>
                   </div>

@@ -199,14 +199,12 @@ export default function IndexPmb() {
         }
         console.log(pembimbingProfile);
       } catch (err) {
-        // Tangani error dengan lebih hati-hati, misalnya:
-        if (err.message !== "Failed to fetch") {
+        if (err.message == "tolong masukkan access_token valid") {
           // Unauthorized
           localStorage.removeItem("pmb_token");
           window.location.href = "/pembimbing/login";
         } else {
           console.error("Error fetching data:", err);
-          // Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
         setIsLoading(false); // Selesai loading
@@ -253,7 +251,7 @@ export default function IndexPmb() {
             <UpNav user={pembimbing} />
             <Sidebar />
             {/* Main */}
-            <main id="main">
+            <main id="main" className="min-vh-100 bg-light">
               {/* Section - Bootstrap Brain Component */}
               {/* Breadcrumb */}
               <section className="py-3 py-md-4 py-xl-5 bg-light">
@@ -292,7 +290,7 @@ export default function IndexPmb() {
                             <div className="card-body">
                               <div className="text-center mb-3">
                                 <img
-                                  src="./assets/img/profile/profile-img-1.jpg"
+                                  src="/assets/img/profile/profile-img-1.jpg"
                                   className="img-fluid rounded-circle"
                                   alt="Luna John"
                                 />

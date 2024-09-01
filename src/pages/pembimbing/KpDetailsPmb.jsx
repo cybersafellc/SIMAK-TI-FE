@@ -131,12 +131,13 @@ export default function KpDetailsPmb() {
         ) {
           alert(err);
           window.location.href = "/pembimbings/kerja-praktek";
-        } else if (err.message == "Failed to fetch") {
-          console.error("Error fetching data:", err);
-          // Unauthorized
-        } else {
+        } else if (err.message == "tolong masukkan access_token valid") {
           localStorage.removeItem("pmb_token");
           window.location.href = "/pembimbing/login";
+
+          // Unauthorized
+        } else {
+          console.error("Error fetching data:", err);
           //   Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
@@ -168,7 +169,7 @@ export default function KpDetailsPmb() {
           {" "}
           <UpNav user={profile} />
           <Sidebar />
-          <main id="main">
+          <main id="main" className="min-vh-100 bg-light">
             <Message
               view={view}
               error={error}
@@ -270,11 +271,9 @@ export default function KpDetailsPmb() {
                               <li className="list-group-item">
                                 <h6 className="mb-1">Tanggal Disetujui</h6>
                                 <span>
-                                  {`${new Date(
-                                    kp?.created_at
-                                  ).getDate()}-${new Date(
-                                    kp?.created_at
-                                  ).getMonth()}-${new Date(
+                                  {`${new Date(kp?.created_at).getDate()}-${
+                                    new Date(kp?.created_at).getMonth() + 1
+                                  }-${new Date(
                                     kp?.created_at
                                   ).getFullYear()} ${new Date(
                                     kp?.created_at
@@ -434,14 +433,7 @@ export default function KpDetailsPmb() {
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
-                                  {" "}
-                                  <Nav.Link
-                                    href={kp?.detail_pengajuan_kp?.ipk}
-                                    target="_blank"
-                                    className="text-primary text-decoration-underline"
-                                  >
-                                    Lihat Disini
-                                  </Nav.Link>
+                                  {kp?.detail_pengajuan_kp?.ipk}
                                 </div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
@@ -449,14 +441,7 @@ export default function KpDetailsPmb() {
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
-                                  {" "}
-                                  <Nav.Link
-                                    href={kp?.detail_pengajuan_kp?.jumlah_sks}
-                                    target="_blank"
-                                    className="text-primary text-decoration-underline"
-                                  >
-                                    Lihat Disini
-                                  </Nav.Link>
+                                  {kp?.detail_pengajuan_kp?.jumlah_sks}
                                 </div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
@@ -497,9 +482,11 @@ export default function KpDetailsPmb() {
                                 <div className="p-2">
                                   {`${new Date(
                                     kp?.detail_pengajuan_kp?.created_at
-                                  ).getDate()}-${new Date(
-                                    kp?.detail_pengajuan_kp?.created_at
-                                  ).getMonth()}-${new Date(
+                                  ).getDate()}-${
+                                    new Date(
+                                      kp?.detail_pengajuan_kp?.created_at
+                                    ).getMonth() + 1
+                                  }-${new Date(
                                     kp?.detail_pengajuan_kp?.created_at
                                   ).getFullYear()} ${new Date(
                                     kp?.detail_pengajuan_kp?.created_at

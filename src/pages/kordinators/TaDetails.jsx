@@ -280,12 +280,12 @@ export default function TaDetails() {
         ) {
           alert(err);
           window.location.href = "/kordinators/tugas-akhir";
-        } else if (err.message == "Failed to fetch") {
-          console.error("Error fetching data:", err);
-          // Unauthorized
-        } else {
+        } else if (err.message == "tolong masukkan access_token valid") {
           localStorage.removeItem("access_token");
           window.location.href = "/kordinators/login";
+          // Unauthorized
+        } else {
+          console.error("Error fetching data:", err);
           //   Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
@@ -317,7 +317,7 @@ export default function TaDetails() {
           {" "}
           <UpNav />
           <Sidebar />
-          <main id="main">
+          <main id="main" className="min-vh-100 bg-light">
             <Message
               view={view}
               error={error}
@@ -534,7 +534,7 @@ export default function TaDetails() {
                                 <div className="p-2">{kp?.judul_kedua}</div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                <div className="p-2">Deskripsi Judul 1</div>
+                                <div className="p-2">Deskripsi Judul 2</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
@@ -616,31 +616,13 @@ export default function TaDetails() {
                                 <div className="p-2">IPK</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                <div className="p-2">
-                                  {" "}
-                                  <Nav.Link
-                                    href={kp?.ipk}
-                                    target="_blank"
-                                    className="text-primary text-decoration-underline"
-                                  >
-                                    Lihat Disini
-                                  </Nav.Link>
-                                </div>
+                                <div className="p-2">{kp?.ipk}</div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                 <div className="p-2">Jumlah SKS</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                <div className="p-2">
-                                  {" "}
-                                  <Nav.Link
-                                    href={kp?.jumlah_sks}
-                                    target="_blank"
-                                    className="text-primary text-decoration-underline"
-                                  >
-                                    Lihat Disini
-                                  </Nav.Link>
-                                </div>
+                                <div className="p-2">{kp?.jumlah_sks}</div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                 <div className="p-2">KRS</div>
@@ -676,11 +658,9 @@ export default function TaDetails() {
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
-                                  {`${new Date(
-                                    kp?.created_at
-                                  ).getDate()}-${new Date(
-                                    kp?.created_at
-                                  ).getMonth()}-${new Date(
+                                  {`${new Date(kp?.created_at).getDate()}-${
+                                    new Date(kp?.created_at).getMonth() + 1
+                                  }-${new Date(
                                     kp?.created_at
                                   ).getFullYear()} ${new Date(
                                     kp?.created_at

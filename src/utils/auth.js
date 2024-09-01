@@ -46,6 +46,26 @@ const mahasiswaLogin = async ({ username, password }, callback) => {
   }
 };
 
+const mahasiswaDaftar = async (form, callback) => {
+  try {
+    const response = await fetch(`${domain}/mahasiswa`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    if (data.error) {
+      throw new Error(data.message);
+    }
+    return await callback(false, data.data);
+  } catch (error) {
+    return await callback(error, false);
+  }
+};
+
 const pembimbingLogin = async ({ username, password }, callback) => {
   try {
     const response = await fetch(`${domain}/pembimbing/login`, {
@@ -88,4 +108,10 @@ const adminVerifyToken = async (access_token, callback) => {
   }
 };
 
-export { adminLogin, adminVerifyToken, mahasiswaLogin, pembimbingLogin };
+export {
+  adminLogin,
+  adminVerifyToken,
+  mahasiswaLogin,
+  pembimbingLogin,
+  mahasiswaDaftar,
+};

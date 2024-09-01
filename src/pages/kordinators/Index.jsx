@@ -93,14 +93,12 @@ export default function Index() {
         setCountKordinators(countKorinators);
         setCountPembimbing(CountPembimbing);
       } catch (err) {
-        // Tangani error dengan lebih hati-hati, misalnya:
-        if (err.message !== "Failed to fetch") {
+        if (err.message == "tolong masukkan access_token valid") {
           // Unauthorized
           localStorage.removeItem("access_token");
           window.location.href = "/kordinators/login";
         } else {
           console.error("Error fetching data:", err);
-          // Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
         setIsLoading(false); // Selesai loading
@@ -149,7 +147,7 @@ export default function Index() {
             <UpNav />
             <Sidebar path="/dashboards" />
             {/* Main */}
-            <main id="main">
+            <main id="main" className="min-vh-100">
               {/* Section - Bootstrap Brain Component */}
               {/* Breadcrumb */}
               <section className="py-3 py-md-4 py-xl-5 bg-light">

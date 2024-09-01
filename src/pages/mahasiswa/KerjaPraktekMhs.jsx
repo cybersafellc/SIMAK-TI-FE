@@ -319,7 +319,7 @@ export default function KerjaPraktekMhs() {
             pesan={message}
             onClose={() => setView(false)}
           />
-          <main id="main">
+          <main id="main" className="min-vh-100 bg-light">
             {/* Section - Bootstrap Brain Component */}
             {/* Breadcrumb */}
             <section className="py-3 py-md-4 py-xl-5 bg-light">
@@ -510,30 +510,14 @@ export default function KerjaPraktekMhs() {
                                     <div className="p-2">IPK</div>
                                   </div>
                                   <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                    <div className="p-2">
-                                      {" "}
-                                      <Nav.Link
-                                        href={detailTa?.ipk}
-                                        target="_blank"
-                                        className="text-primary text-decoration-underline"
-                                      >
-                                        Lihat Disini
-                                      </Nav.Link>
-                                    </div>
+                                    <div className="p-2"> {detailTa?.ipk}</div>
                                   </div>
                                   <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                     <div className="p-2">Jumlah SKS</div>
                                   </div>
                                   <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                     <div className="p-2">
-                                      {" "}
-                                      <Nav.Link
-                                        href={detailTa?.jumlah_sks}
-                                        target="_blank"
-                                        className="text-primary text-decoration-underline"
-                                      >
-                                        Lihat Disini
-                                      </Nav.Link>
+                                      {detailTa?.jumlah_sks}
                                     </div>
                                   </div>
                                   <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
@@ -572,9 +556,11 @@ export default function KerjaPraktekMhs() {
                                     <div className="p-2">
                                       {`${new Date(
                                         detailTa?.created_at
-                                      ).getDate()}-${new Date(
-                                        detailTa?.created_at
-                                      ).getMonth()}-${new Date(
+                                      ).getDate()}-${
+                                        new Date(
+                                          detailTa?.created_at
+                                        ).getMonth() + 1
+                                      }-${new Date(
                                         detailTa?.created_at
                                       ).getFullYear()} ${new Date(
                                         detailTa?.created_at
@@ -665,7 +651,10 @@ export default function KerjaPraktekMhs() {
                                       htmlFor="inputFirstName"
                                       className="form-label"
                                     >
-                                      Form Rekomendasi 1
+                                      Form Rekomendasi 1{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -680,7 +669,10 @@ export default function KerjaPraktekMhs() {
                                       htmlFor="inputLastName"
                                       className="form-label"
                                     >
-                                      Form Rekomendasi 2
+                                      Form Rekomendasi 2{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -695,7 +687,10 @@ export default function KerjaPraktekMhs() {
                                       htmlFor="inputEducation"
                                       className="form-label"
                                     >
-                                      Form Persetujuan Perusahaan
+                                      Form Persetujuan Perusahaan{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -712,7 +707,10 @@ export default function KerjaPraktekMhs() {
                                       htmlFor="inputAddress"
                                       className="form-label"
                                     >
-                                      Bukti Pembayaran
+                                      Bukti Pembayaran{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -728,7 +726,10 @@ export default function KerjaPraktekMhs() {
                                       htmlFor="inputYouTube"
                                       className="form-label"
                                     >
-                                      Bukti Selesai Praktikum
+                                      Bukti Selesai Praktikum{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -773,7 +774,10 @@ export default function KerjaPraktekMhs() {
                                       htmlFor="inputYouTube"
                                       className="form-label"
                                     >
-                                      KRS
+                                      KRS{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -788,7 +792,10 @@ export default function KerjaPraktekMhs() {
                                       htmlFor="inputYouTube"
                                       className="form-label"
                                     >
-                                      Transkip Nilai
+                                      Transkip Nilai{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"

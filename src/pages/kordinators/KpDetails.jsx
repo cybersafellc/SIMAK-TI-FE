@@ -11,7 +11,7 @@ import {
   kpSetJadwal,
   kpSetujui,
 } from "../../utils/all-utils";
-import { Badge, Nav, Spinner } from "react-bootstrap";
+import { Alert, Badge, Nav, Spinner } from "react-bootstrap";
 import Message from "../../components/Message";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -231,13 +231,11 @@ export default function KpDetails() {
         if (err.message == `pengajuan dengan id ${query.get("id")} tidak ada`) {
           alert(err);
           window.location.href = "/kordinators/kerja-praktek";
-        } else if (err.message == "Failed to fetch") {
-          console.error("Error fetching data:", err);
-          // Unauthorized
-        } else {
+        } else if (err.message == "tolong masukkan access_token valid") {
           localStorage.removeItem("access_token");
           window.location.href = "/kordinators/login";
-          //   Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
+        } else {
+          console.error("Error fetching data:", err);
         }
       } finally {
         setIsLoading(false); // Selesai loading
@@ -268,7 +266,7 @@ export default function KpDetails() {
           {" "}
           <UpNav />
           <Sidebar />
-          <main id="main">
+          <main id="main" className="min-vh-100 bg-light">
             <Message
               view={view}
               error={error}
@@ -536,31 +534,13 @@ export default function KpDetails() {
                                 <div className="p-2">IPK</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                <div className="p-2">
-                                  {" "}
-                                  <Nav.Link
-                                    href={kp?.ipk}
-                                    target="_blank"
-                                    className="text-primary text-decoration-underline"
-                                  >
-                                    Lihat Disini
-                                  </Nav.Link>
-                                </div>
+                                <div className="p-2">{kp?.ipk}</div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                 <div className="p-2">Jumlah SKS</div>
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                <div className="p-2">
-                                  {" "}
-                                  <Nav.Link
-                                    href={kp?.jumlah_sks}
-                                    target="_blank"
-                                    className="text-primary text-decoration-underline"
-                                  >
-                                    Lihat Disini
-                                  </Nav.Link>
-                                </div>
+                                <div className="p-2"> {kp?.jumlah_sks}</div>
                               </div>
                               <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                 <div className="p-2">KRS</div>
@@ -596,11 +576,9 @@ export default function KpDetails() {
                               </div>
                               <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                 <div className="p-2">
-                                  {`${new Date(
-                                    kp?.created_at
-                                  ).getDate()}-${new Date(
-                                    kp?.created_at
-                                  ).getMonth()}-${new Date(
+                                  {`${new Date(kp?.created_at).getDate()}-${
+                                    new Date(kp?.created_at).getMonth() + 1
+                                  }-${new Date(
                                     kp?.created_at
                                   ).getFullYear()} ${new Date(
                                     kp?.created_at
@@ -794,6 +772,15 @@ export default function KpDetails() {
                             kp?.tanggal_mulai_kp == null &&
                             kp?.tanggal_selesai_kp == null ? (
                               <form onSubmit={setJadwal}>
+                                <Alert variant="warning">
+                                  <h6>Penting !</h6>
+                                  <ul>
+                                    <li>
+                                      Jadwal Kerja Praktek (KP) tidak boleh
+                                      lebih dari 33 hari.
+                                    </li>
+                                  </ul>
+                                </Alert>
                                 <div className="row gy-3 gy-xxl-4">
                                   <div className="col-12">
                                     <label

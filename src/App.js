@@ -25,6 +25,17 @@ import KpDetailsPmb from "./pages/pembimbing/KpDetailsPmb";
 import ProfileSaye from "./pages/kordinators/ProfileSaye";
 import TugasAkhirMhs from "./pages/mahasiswa/TugasAkhirMhs";
 import KerjaPraktekMhs from "./pages/mahasiswa/KerjaPraktekMhs";
+import SeminarKp from "./pages/kordinators/SeminarKp";
+import SeminarKpDetails from "./pages/kordinators/SeminarKpDetails";
+import SeminarProposal from "./pages/kordinators/SeminarProposal";
+import SeminarProposalDetails from "./pages/kordinators/SeminarProposalDetails";
+import SeminarHasil from "./pages/kordinators/SeminarHasil";
+import SeminarHasilDetails from "./pages/kordinators/SeminarHasilDetails";
+import SeminarKpMhs from "./pages/mahasiswa/SeminarKpMhs";
+import SeminarProposalMhs from "./pages/mahasiswa/SeminarProposalMhs";
+import SeminarHasilMhs from "./pages/mahasiswa/SeminarHasilMhs";
+import Register from "./pages/mahasiswa/Register";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -43,6 +54,24 @@ function App() {
           <Route path="/kordinators/pembimbing" element={<Pembimbings />} />
           <Route path="/kordinators/kerja-praktek" element={<KerjaPraktek />} />
           <Route path="/kordinators/tugas-akhir" element={<TugasAkhir />} />
+          <Route path="/kordinators/seminar-kp" element={<SeminarKp />} />
+          <Route
+            path="/kordinators/seminar-proposal"
+            element={<SeminarProposal />}
+          />
+          <Route
+            path="/kordinators/seminar-proposal/details"
+            element={<SeminarProposalDetails />}
+          />
+          <Route
+            path="/kordinators/seminar-kp/details"
+            element={<SeminarKpDetails />}
+          />
+          <Route path="/kordinators/seminar-hasil" element={<SeminarHasil />} />
+          <Route
+            path="/kordinators/seminar-hasil/details"
+            element={<SeminarHasilDetails />}
+          />
           <Route
             path="/kordinators/kerja-praktek/details"
             element={<KpDetails />}
@@ -53,6 +82,7 @@ function App() {
           />
           {/* mahasiswa */}
           <Route path="/mahasiswa/login" element={<Login />} />
+          <Route path="/mahasiswa/register" element={<Register />} />
           <Route path="/mahasiswa" element={<IndexMhs />} />
           <Route path="/mahasiswa/tugas-akhir" element={<TugasAkhirMhs />} />
           <Route
@@ -75,6 +105,16 @@ function App() {
             path="/pembimbings/kerja-praktek/details"
             element={<KpDetailsPmb />}
           />
+          <Route path="/mahasiswa/seminar-kp" element={<SeminarKpMhs />} />
+          <Route
+            path="/mahasiswa/seminar-proposal"
+            element={<SeminarProposalMhs />}
+          />
+          <Route
+            path="/mahasiswa/seminar-hasil"
+            element={<SeminarHasilMhs />}
+          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </>

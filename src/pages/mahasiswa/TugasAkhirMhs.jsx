@@ -222,14 +222,11 @@ export default function TugasAkhirMhs() {
         setProfile(mahasiswaProfile);
         setPembimbing([...pembimbing1, ...pembimbing2, ...pembimbing3]);
       } catch (err) {
-        // Tangani error dengan lebih hati-hati, misalnya:
         if (err.message == "tolong masukkan access_token valid") {
-          // Unauthorized
           localStorage.removeItem("mhs_token");
           window.location.href = "/mahasiswa/login";
         } else {
           console.error("Error fetching data:", err);
-          // Tampilkan pesan error kepada pengguna atau lakukan tindakan lain yang sesuai
         }
       } finally {
         setIsLoading(false); // Selesai loading
@@ -356,7 +353,7 @@ export default function TugasAkhirMhs() {
             pesan={message}
             onClose={() => setView(false)}
           />
-          <main id="main">
+          <main id="main" className="min-vh-100 bg-light">
             {/* Section - Bootstrap Brain Component */}
             {/* Breadcrumb */}
             <section className="py-3 py-md-4 py-xl-5 bg-light">
@@ -589,30 +586,14 @@ export default function TugasAkhirMhs() {
                                     <div className="p-2">IPK</div>
                                   </div>
                                   <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                    <div className="p-2">
-                                      {" "}
-                                      <Nav.Link
-                                        href={detailTa?.ipk}
-                                        target="_blank"
-                                        className="text-primary text-decoration-underline"
-                                      >
-                                        Lihat Disini
-                                      </Nav.Link>
-                                    </div>
+                                    <div className="p-2">{detailTa?.ipk}</div>
                                   </div>
                                   <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                     <div className="p-2">Jumlah SKS</div>
                                   </div>
                                   <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                     <div className="p-2">
-                                      {" "}
-                                      <Nav.Link
-                                        href={detailTa?.jumlah_sks}
-                                        target="_blank"
-                                        className="text-primary text-decoration-underline"
-                                      >
-                                        Lihat Disini
-                                      </Nav.Link>
+                                      {detailTa?.jumlah_sks}
                                     </div>
                                   </div>
                                   <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
@@ -652,9 +633,11 @@ export default function TugasAkhirMhs() {
                                     <div className="p-2">
                                       {`${new Date(
                                         detailTa?.created_at
-                                      ).getDate()}-${new Date(
-                                        detailTa?.created_at
-                                      ).getMonth()}-${new Date(
+                                      ).getDate()}-${
+                                        new Date(
+                                          detailTa?.created_at
+                                        ).getMonth() + 1
+                                      }-${new Date(
                                         detailTa?.created_at
                                       ).getFullYear()} ${new Date(
                                         detailTa?.created_at
@@ -703,7 +686,10 @@ export default function TugasAkhirMhs() {
                                       htmlFor="inputFirstName"
                                       className="form-label"
                                     >
-                                      Form Tugas Akhir
+                                      Form Tugas Akhir{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -856,7 +842,10 @@ export default function TugasAkhirMhs() {
                                       htmlFor="inputAddress"
                                       className="form-label"
                                     >
-                                      Bukti Pembayaran
+                                      Bukti Pembayaran{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -872,7 +861,10 @@ export default function TugasAkhirMhs() {
                                       htmlFor="inputYouTube"
                                       className="form-label"
                                     >
-                                      Bukti Selesai Praktikum
+                                      Bukti Selesai Praktikum{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -887,7 +879,10 @@ export default function TugasAkhirMhs() {
                                       htmlFor="inputYouTube"
                                       className="form-label"
                                     >
-                                      Bukti Selesai KP
+                                      Bukti Selesai KP{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -932,7 +927,10 @@ export default function TugasAkhirMhs() {
                                       htmlFor="inputYouTube"
                                       className="form-label"
                                     >
-                                      KRS
+                                      KRS{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
@@ -947,7 +945,10 @@ export default function TugasAkhirMhs() {
                                       htmlFor="inputYouTube"
                                       className="form-label"
                                     >
-                                      Transkip Nilai
+                                      Transkip Nilai{" "}
+                                      <span className="fst-italic text-danger">
+                                        (cantumkan link google drive)
+                                      </span>
                                     </label>
                                     <input
                                       type="text"
